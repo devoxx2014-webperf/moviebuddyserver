@@ -4,6 +4,7 @@ import static java.util.Collections.binarySearch;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.google.common.base.Predicate;
 
@@ -57,10 +58,11 @@ public class InMemoryMovieService implements MovieService {
    */
   @Override
   public Iterable<Movie> findByTitle(final String title, int limit) {
+  	final Pattern pattern = Pattern.compile(title);
     return find(new Predicate<Movie>() {
       @Override
       public boolean apply(Movie movie) {
-        return movie.title.contains(title);
+        return pattern.matcher(movie.title).find();
       }
     }, limit);
   }
@@ -70,10 +72,11 @@ public class InMemoryMovieService implements MovieService {
    */
   @Override
   public Iterable<Movie> findByActors(final String actors, int limit) {
+  	final Pattern pattern = Pattern.compile(actors);
     return find(new Predicate<Movie>() {
       @Override
       public boolean apply(Movie movie) {
-        return movie.actors.contains(actors);
+        return pattern.matcher(movie.actors).find();
       }
     }, limit);
   }
@@ -83,10 +86,11 @@ public class InMemoryMovieService implements MovieService {
    */
   @Override
   public Iterable<Movie> findByGenre(final String genre, int limit) {
+  	final Pattern pattern = Pattern.compile(genre);
     return find(new Predicate<Movie>() {
       @Override
       public boolean apply(Movie movie) {
-        return movie.genre.contains(genre);
+        return pattern.matcher(movie.genre).find();
       }
     }, limit);
   }
