@@ -9,6 +9,7 @@ import static java.util.Collections.binarySearch;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.google.common.base.Predicate;
 import com.jeffmaury.moviebuddy.server.JsonStream.ItemFactory;
@@ -65,10 +66,11 @@ public class InMemoryUserService implements UserService {
    */
   @Override
   public Iterable<User> findByName(final String name, int limit) {
+  	final Pattern pattern = Pattern.compile(name);
     return find(new Predicate<User>() {
       @Override
       public boolean apply(User user) {
-        return user.name.contains(name);
+        return pattern.matcher(user.name).find();
       }
     }, limit);
   }
