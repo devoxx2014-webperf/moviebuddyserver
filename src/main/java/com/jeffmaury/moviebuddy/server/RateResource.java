@@ -43,7 +43,7 @@ public class RateResource {
       Movie movie = movieService.findMovie(node.path("movieId").asInt());
       if ((user != null) && (movie != null)) {
         user.rates.put(movie, node.path("rate").asInt());
-        return Response.status(201).build();
+        return Response.status(301).header("Location", "/rates/" + user._id).build();
       } else {
         return Response.status(404).build();
       }
