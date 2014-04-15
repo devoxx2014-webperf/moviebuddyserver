@@ -23,6 +23,32 @@ public class InMemoryUserService implements UserService {
 
   public static final UserService INSTANCE = new InMemoryUserService();
   
+  private MovieService movieService = InMemoryMovieService.INSTANCE;
+
+  private static int[][] INIT_STATE = {
+  	/*userid      movieid       vote*/
+  	{3022,        772,          2 },
+  	{3022,        24 ,          10},
+  	{3022,        482,          4 },
+  	{3022,        302,          7 },
+  	{3022,        680,          6 },
+  	{9649,        772,          2 },
+  	{9649,        24 ,          8 },
+  	{9649,        482,          9 },
+  	{9649,        302,          3 },
+  	{9649,        556,          8 },
+  	{2349,        453,          7 },
+  	{2349,        461,          9 },
+  	{2349,        258,          10},
+  	{2349,        494,          9 },
+  	{2349,        158,          4 },
+  	{ 496,        682,          4 },
+  	{ 496,        559,          7 },
+  	{ 496,        537,          4 },
+  	{ 496,        352,          3 },
+  	{ 496,        005,          9	}
+  };
+  
   private List<User> users;
 
   private InMemoryUserService() {
@@ -34,6 +60,11 @@ public class InMemoryUserService implements UserService {
           return User.parse(item);
         }
       });
+    	for(int[] triple : INIT_STATE) {
+    		User user = findUser(triple[0]);
+    		Movie movie = movieService.findMovie(triple[1]);
+    		user.rates.put(movie, triple[2]);
+    	}
     }
     catch (IOException e) {
       e.printStackTrace();
