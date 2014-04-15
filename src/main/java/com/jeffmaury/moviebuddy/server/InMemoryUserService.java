@@ -23,9 +23,7 @@ public class InMemoryUserService implements UserService {
 
   public static final UserService INSTANCE = new InMemoryUserService();
   
-  private MovieService movieService = InMemoryMovieService.INSTANCE;
-
-  private static int[][] INIT_STATE = {
+  private final int[][] INIT_STATE = {
   	/*userid      movieid       vote*/
   	{3022,        772,          2 },
   	{3022,        24 ,          10},
@@ -49,6 +47,9 @@ public class InMemoryUserService implements UserService {
   	{ 496,        005,          9	}
   };
   
+
+  private MovieService movieService = InMemoryMovieService.INSTANCE;
+
   private List<User> users;
 
   private InMemoryUserService() {
